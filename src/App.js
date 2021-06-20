@@ -6,18 +6,18 @@ import './styles/root.scss'
 import {calculateWinner} from './helpers'  
 
 const App=()=>{
-
-  const [history,setHistory]=useState([{
+  const NEW_GAME=[{
     boards : Array(9).fill(null),
      isXNext : true
-    }])
+    }]
+  const [history,setHistory]=useState(NEW_GAME)
     const [currentMove, setCurrentMove]=useState(0) 
     const current = history[currentMove]
 /*console.log(boards)
     const handleSquareClick=()=>{
         setBoard(5)
     }*/
-    const winner= calculateWinner(current.boards)
+    const {winner, winnigSquares}= calculateWinner(current.boards)
     
    /* while(!winner)
     {
@@ -60,11 +60,18 @@ const App=()=>{
     const moveTo=(move)=>{
       setCurrentMove(move)
     }
+    const startNewGame=()=>
+    {
+      setHistory(NEW_GAME)
+      setCurrentMove(0)
+    }
+
   return(
     <div className='app'> 
     <h1>TIC TAC TOE</h1>
     <StatusMessage winner={winner} current={current} />
-    <Board boards={current.boards} handleSquareClick={handleSquareClick } />
+    <Board boards={current.boards} handleSquareClick={handleSquareClick } winnigSquares={winnigSquares} />
+    <button type="button" onClick={startNewGame}> START NEW GAME </button>
     <History history={history} moveTo={moveTo} currentMove={currentMove} />
   </div>
   )
